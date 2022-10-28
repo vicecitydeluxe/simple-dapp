@@ -10,11 +10,7 @@ const count = ref(0)
 
 <template>
   <h1>{{ msg }}</h1>
-
-  <div class="card">
+  <div class="flex justify-center">
     <button type="button" @click="count++">count is {{ count }}</button>
   </div>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
 </template>
