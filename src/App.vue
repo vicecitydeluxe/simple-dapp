@@ -1,5 +1,5 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Contract from './components/Contract.vue'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="/vite.svg" class="logo" alt="Vite logo"/>
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue"/>
+  <Contract msg="Vite + Vue"/>
 </template>
 
 <style scoped lang="scss">
