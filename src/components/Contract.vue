@@ -1,22 +1,23 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {onMounted, watch} from 'vue'
 import {useMainStore} from '../store/main'
 
 const store = useMainStore()
 
-defineProps({
-  msg: String
-})
 onMounted(() => {
-
+  store.getAccount()
 })
-const count = ref(0)
+
+watch(
+    () => store.account,
+    () => {
+      store.getBalance()
+    }
+)
+
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1 v-if="store.account">Account</h1>
   <h2 class="text-orange-600">{{ store.account }}</h2>
-  <div class="flex justify-center">
-    <button type="button" @click="count++">count is {{ count }}</button>
-  </div>
 </template>

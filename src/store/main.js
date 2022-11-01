@@ -1,27 +1,39 @@
 import {defineStore} from 'pinia'
-import Web3 from 'web3'
 import {ref} from "vue";
 
 export const useMainStore = defineStore('main', () => {
     const account = ref('')
+    const balance = ref('')
 
-    function initWeb3() {
-        if (typeof web3 === undefined) {
-            window.web3 = new Web3(web3.currentProvider)
-        }
-    }
-
-    function watchWeb3Account() {
+    function getAccount() {
         setInterval(async () => {
-            window.ethereum.on('chainChanged', () => console.log('1111'));
-            const accounts = await web3.eth.getAccounts()
-            const activeAccount = accounts[0]
-            if (!activeAccount) return
-            if (activeAccount !== account.value) {
-                account.value = activeAccount
-            }
-        }, 500)
+            await window.ethereum.request({method: 'eth_requestAccounts'})
+                .then(accounts => {
+                    account.value = accounts[0]
+                    console.log(account.value)
+                })
+        }, 3000)
     }
 
-    return {account, initWeb3, watchWeb3Account}
+    function getBalance() {
+        setInterval(async () => {
+            await window.ethereum.request({method: 'eth_getBalance', params: [account.value, 'latest']})
+                .then((res) => {
+                    balance.value = res
+                    console.log(res)
+                })
+        }, 3000)
+
+    }
+
+    return {
+        /**
+         * state
+         */
+        account, balance,
+        /**
+         * actions
+         */
+        getAccount, getBalance
+    }
 })
