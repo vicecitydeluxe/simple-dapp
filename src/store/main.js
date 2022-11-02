@@ -10,30 +10,21 @@ export const useMainStore = defineStore('main', () => {
             await window.ethereum.request({method: 'eth_requestAccounts'})
                 .then(accounts => {
                     account.value = accounts[0]
-                    console.log(account.value)
                 })
-        }, 3000)
+        }, 1000)
     }
 
     function getBalance() {
         setInterval(async () => {
             await window.ethereum.request({method: 'eth_getBalance', params: [account.value, 'latest']})
                 .then((res) => {
-                    balance.value = res
-                    console.log(res)
+                    let decoded = parseInt(res, 16)
+                    balance.value = decoded / (10 ** 18) + ' ETH'
                 })
-        }, 3000)
-
+        }, 500)
     }
-
     return {
-        /**
-         * state
-         */
         account, balance,
-        /**
-         * actions
-         */
         getAccount, getBalance
     }
 })
