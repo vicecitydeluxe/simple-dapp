@@ -16,13 +16,15 @@ export const useMainStore = defineStore('main', () => {
 
     function getBalance() {
         setInterval(async () => {
-            await window.ethereum.request({method: 'eth_getBalance', params: [account.value, 'latest']})
+            await window.ethereum.request({method: 'eth_getBalance',
+                params: [account.value, 'latest']})
                 .then((res) => {
                     let decoded = parseInt(res, 16)
                     balance.value = decoded / (10 ** 18) + ' ETH'
                 })
         }, 500)
     }
+
     return {
         account, balance,
         getAccount, getBalance
